@@ -1,0 +1,57 @@
+.flex{
+    display: flex;
+}
+
+.item-center{align-items: center;}
+
+.content-center{
+    justify-content: center;
+}
+
+.border{
+    border: 1px solid white;
+}
+
+.invert{
+    filter: invert(1);
+}
+
+.absolute{
+    position: absolute;
+}
+
+.relative{
+    position: relative;
+}
+
+.fixed{
+    position: fixed;
+}
+
+.border-fifty{
+    border-radius: 50%;
+}
+
+.font-ten{
+    font-size: 10px;
+}
+
+.bg-trans{
+    background-color: transparent;
+}
+
+.white{
+    color: white;
+}
+
+.br-none{
+    border: none;
+}
+
+.br-five{
+    border-radius: 5px;
+}
+
+.pointer{
+    cursor: pointer;
+}

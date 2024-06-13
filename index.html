@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify- BY Sujal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleclasses.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"
+        integrity="sha512-OQDNdI5rpnZ0BRhhJc+btbbtnxaj+LdQFeh0V9/igiEPDiWE2fG+ZsXl0JEH+bjXKPJ3zcXqNyP4/F/NegVdZg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="main flex">
+        <div class="left ">
+            <div class="left-top ">
+                <img src="logo.svg" alt="spotify" class="invert">
+                <h3><i class="ri-home-5-fill"></i>Home</h3>
+                <h3><i class="ri-search-line"></i>Search</h3>
+            </div>
+            <div class="left-bottom relative">
+                <div class="playlist item-center">
+                    <div class="list-left flex">
+                        <img src="library.svg" alt="" class="invert">
+                        <h3>Your Library</h3>
+                    </div>
+                    <div class="songList">
+                        <ul>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer absolute">
+                    <div><a href="https://www.spotify.com/jp/legal/"><span>Legal</span></a></div>
+                    <div><a href="https://www.spotify.com/jp/privacy/"><span>Privacy Center</span></a></div>
+                    <div><a href="https://www.spotify.com/jp/legal/privacy-policy/"><span>Privacy Policy</span></a>
+                    </div>
+                    <div><a href="https://www.spotify.com/jp/legal/cookies-policy/"><span>Cookies</span></a></div>
+                    <div><a href="https://www.spotify.com/jp/legal/privacy-policy/#s3"><span>About Ads</span></a></div>
+                    <div><a href="https://www.spotify.com/jp/accessibility/"><span>Accessibility</span></a></div>
+                </div>
+            </div>
+        </div>
+        <div class="right relative">
+            <div class="nav flex item-center sticky">
+                <div class="nav-left ">
+                    <button class="border-fifty font-ten"> <i class="ri-arrow-left-s-line"></i> </button>
+                    <button class="border-fifty font-ten"><i class="ri-arrow-right-s-line"></i></button>
+
+                </div>
+                <div class="nav-right">
+                    <button class="bg-trans white br-none signupbtn pointer">Sign Up</button>
+                    <button class="loginbtn pointer">Login</button>
+                </div>
+            </div>
+            <div class="spotifyPlaylist">
+                <h2>Spotify Playlist</h2>
+                <div class="cardContainer flex">
+                    <div class="card relative">
+                        <div class="play">
+                            <button class="border-fifty absolute br-none"> <i class="ri-play-fill"></i></button>
+                        </div>
+                        <img src="card.jpeg" alt="">
+                        <h2>Dinner With friends!</h2>
+                        <p>The perfect soundtrack to those long nights over dinner</p>
+                    </div>
+                    <div class="card relative">
+                        <div class="play">
+                            <button class="border-fifty absolute br-none"> <i class="ri-play-fill"></i></button>
+                        </div>
+                        <img src="card.jpeg" alt="">
+                        <h2>Dinner With friends!</h2>
+                        <p>The perfect soundtrack to those long nights over dinner</p>
+                    </div>
+                    <div class="card relative">
+                        <div class="play">
+                            <button class="border-fifty absolute br-none"> <i class="ri-play-fill"></i></button>
+                        </div>
+                        <img src="card.jpeg" alt="">
+                        <h2>Dinner With friends!</h2>
+                        <p>The perfect soundtrack to those long nights over dinner</p>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="playbar absolute fixed" >
+                <div class="musicInfo">
+                </div>
+                <div class="musicbtn flex">
+                <button class="br-none bg-trans invert"><i class="ri-skip-left-fill"></i></button>
+                <button class="br-none bg-trans invert play-first-btn"><i class="ri-play-circle-line"></i></button>
+                <button class="br-none bg-trans invert"><i class="ri-skip-right-fill"></i></button>
+                </div>
+                <div class="songTime">
+                    
+                </div>
+                <div class="seekbar ">
+                    
+                </div>
+                <div class="circle border-fifty"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
