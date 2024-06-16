@@ -1,16 +1,28 @@
-let songs; //used in main function also
-let audio;
-let currentSong = new Audio();
+let songs; // Used in main function also
+let currentSong = new Audio(); // Initialize currentSong here
+let start = document.querySelector(".play-first-btn");
+let isPlaying = false;
+let currentSongName = ""; // Variable to keep track of the current song name
 
-let playMusic=(music) => {
-  currentSong.src = "/music/"+music ;
+let playMusic = (music) => {
+  if (isPlaying) {
+    currentSong.pause();
+    isPlaying = false;
+  }
+  currentSong.src = "/music/" + music;
   currentSong.play();
-}
+  currentSongName = music; // Update the current song name
+  isPlaying = true;
+  start.innerHTML = `<i class="ri-pause-circle-fill"></i>`;
+  document.querySelector(".musicInfo").innerHTML=music;
+  document.querySelector(".songTime").innerHTML="00:00/00:00";
+};
+
 
 
 async function main() {
   // Fetch the HTML document containing the song list
-  let response = await fetch("http://127.0.0.1:5500/music/");
+  let response = await fetch("/music/");
   let responseText = await response.text();
 
   // Parse the HTML response into a DOM document
@@ -45,30 +57,70 @@ async function main() {
 
   // Remove the first <li> element
   let firstLi = songUl.querySelector("li");
-  firstLi.remove();
+  if (firstLi) {
+    firstLi.remove();
+  }
 
-      // Add event listener to play button wiz is available in center
-      document.querySelector(".play-first-btn").addEventListener("click", () => {
-         audio = new Audio("http://127.0.0.1:5500/music/" + songs[1]);
-        audio.play();
-        audio.addEventListener("loadeddata", () => {
-          console.log(
-            "Duration:",
-            audio.duration,
-            "Source:",
-            audio.currentSrc,
-            "Current Time:",
-            audio.currentTime
-          );
-        });
-      });
-    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
-      e.addEventListener("click", elemet => {
-        console.log(e.querySelector(".songDetails>div").innerHTML);
-        playMusic(e.querySelector(".songDetails>div").innerHTML);
-      })
-    })
+  // Add event listener to play button which is available in center
+  document.querySelector(".play-first-btn").addEventListener("click", () => {
+    if (!isPlaying && currentSongName) {
+      currentSong.play();
+      start.innerHTML = `<i class="ri-pause-circle-fill"></i>`;
+      isPlaying = true;
+    } else {
+      currentSong.pause();
+      start.innerHTML = `<i class="ri-play-circle-line"></i>`;
+      isPlaying = false;
+    }
+  });
+
+  Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach((e) => {
+    e.addEventListener("click", () => {
+      let songName = e.querySelector(".songDetails > div").innerHTML.trim();
+      playMusic(songName);
+    });
+  });
+
+  currentSong.addEventListener("pause", () => {
+    start.innerHTML = `<i class="ri-play-circle-line"></i>`;
+    isPlaying = false;
+  });
+
+  currentSong.addEventListener("play", () => {
+    start.innerHTML = `<i class="ri-pause-circle-fill"></i>`;
+    isPlaying = true;
+  });
+  //Song timer function
+  //function for converting sec to min
+  function secToMin(seconds) {
+    // Calculate minutes and remaining seconds
+    let minutes = Math.floor(seconds / 60);
+    let remainingSeconds = Math.floor(seconds % 60);
+    
+    // Pad single digit seconds with a leading zero
+    if (remainingSeconds < 10) {
+      remainingSeconds = '0' + remainingSeconds;
+    }
+  
+    // Return the formatted time string
+    return `${minutes}:${remainingSeconds}`;
+  }
+
+  //to update time of song
+  currentSong.addEventListener("timeupdate", ()=>{
+    // console.log(currentSong.currentTime, currentSong.duration);
+    document.querySelector(".songTime").innerHTML=`${secToMin(currentSong.currentTime)}/${secToMin(currentSong.duration)}`
+    document.querySelector(".circle").style.left=(currentSong.currentTime/currentSong.duration)*98+"%"
+  })
+
+
+  //to move seekbar of song as per need
+  document.querySelector(".seekbar").addEventListener("click", e=> { //offsetx is used to get actual point where user clicked. 
+    let songPercent = (e.offsetX/e.target.getBoundingClientRect().width)*98; //getBoundingClientRect use to find where user is on page, 98% bcz seekbar width is 98%
+    document.querySelector(".circle").style.left=songPercent+"%";
+    currentSong.currentTime=((currentSong.duration)*songPercent)/100;
+  })
+  
 }
-
 
 main();

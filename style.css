@@ -7,6 +7,14 @@
   font-family: "Roboto", sans-serif;
 }
 
+* {
+  scrollbar-width: none; /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
 body {
   background-color: #000000;
   color: white;
@@ -236,17 +244,32 @@ body {
 
 .seekbar {
   border: 2px solid white;
-  margin: 20px 0px 0 20px;
-  width: 95%;
+  margin: 15px 0px 0 10px;
+  width: 98%;
+  cursor: pointer;
 }
 
 .circle {
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   background-color: white;
-  margin: 0 10px 0 20px;
+  margin: 0 0px 0 10px;
   position: relative;
-  bottom: 10px;
+  bottom: 9px;
   left: 0%;
   transition: left 0.5s;
+}
+
+.songTime {
+  top: 12px;
+  right: 40px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.musicInfo{
+  top: 12px;
+  left: 30px; 
+  font-size: 15px;
+  font-weight: 600;
 }
