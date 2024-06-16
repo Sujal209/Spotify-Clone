@@ -19,6 +19,7 @@
                 <img src="logo.svg" alt="spotify" class="invert">
                 <h3><i class="ri-home-5-fill"></i>Home</h3>
                 <h3><i class="ri-search-line"></i>Search</h3>
+                <i class="ri-menu-unfold-line absolute mainPage"></i>
             </div>
             <div class="left-bottom relative">
                 <div class="playlist item-center">
@@ -46,6 +47,7 @@
         <div class="right relative">
             <div class="nav flex item-center sticky">
                 <div class="nav-left ">
+                    <i class="ri-menu-fold-line menuIcon" ></i>
                     <button class="border-fifty font-ten"> <i class="ri-arrow-left-s-line"></i> </button>
                     <button class="border-fifty font-ten"><i class="ri-arrow-right-s-line"></i></button>
 
@@ -58,7 +60,7 @@
             <div class="spotifyPlaylist">
                 <h2>Spotify Playlist</h2>
                 <div class="cardContainer flex">
-                    <div class="card relative">
+                    <div data-folder="Lisa"  class="card relative">
                         <div class="play">
                             <button class="border-fifty absolute br-none"> <i class="ri-play-fill"></i></button>
                         </div>
@@ -66,7 +68,7 @@
                         <h2>Dinner With friends!</h2>
                         <p>The perfect soundtrack to those long nights over dinner</p>
                     </div>
-                    <div class="card relative">
+                    <div data-folder="Hindi Hits" class="card relative">
                         <div class="play">
                             <button class="border-fifty absolute br-none"> <i class="ri-play-fill"></i></button>
                         </div>
@@ -74,15 +76,6 @@
                         <h2>Dinner With friends!</h2>
                         <p>The perfect soundtrack to those long nights over dinner</p>
                     </div>
-                    <div class="card relative">
-                        <div class="play">
-                            <button class="border-fifty absolute br-none"> <i class="ri-play-fill"></i></button>
-                        </div>
-                        <img src="card.jpeg" alt="">
-                        <h2>Dinner With friends!</h2>
-                        <p>The perfect soundtrack to those long nights over dinner</p>
-                    </div>
-
 
 
                 </div>
@@ -91,9 +84,9 @@
                 <div class="musicInfo absolute">
                 </div>
                 <div class="musicbtn flex">
-                <button class="br-none bg-trans invert"><i class="ri-skip-left-fill"></i></button>
+                <button class="br-none bg-trans invert previous"><i class="ri-skip-left-fill"></i></button>
                 <button class="br-none bg-trans invert play-first-btn"><i class="ri-play-circle-line"></i></button>
-                <button class="br-none bg-trans invert"><i class="ri-skip-right-fill"></i></button>
+                <button class="br-none bg-trans invert next"><i class="ri-skip-right-fill"></i></button>
                 </div>
                 <div class="songTime absolute">
                     

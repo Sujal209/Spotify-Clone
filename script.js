@@ -3,26 +3,26 @@ let currentSong = new Audio(); // Initialize currentSong here
 let start = document.querySelector(".play-first-btn");
 let isPlaying = false;
 let currentSongName = ""; // Variable to keep track of the current song name
+let crntFolder;
 
-let playMusic = (music) => {
+let playMusic = (music, folder) => {
   if (isPlaying) {
     currentSong.pause();
     isPlaying = false;
   }
-  currentSong.src = "/music/" + music;
+  currentSong.src = `${crntFolder}/` + music;
   currentSong.play();
   currentSongName = music; // Update the current song name
   isPlaying = true;
   start.innerHTML = `<i class="ri-pause-circle-fill"></i>`;
-  document.querySelector(".musicInfo").innerHTML=music;
-  document.querySelector(".songTime").innerHTML="00:00/00:00";
+  document.querySelector(".musicInfo").innerHTML = music;
+  document.querySelector(".songTime").innerHTML = "00:00/00:00";
 };
 
-
-
-async function main() {
+async function getSongs(folder) {
+  crntFolder=folder;
   // Fetch the HTML document containing the song list
-  let response = await fetch("/music/");
+  let response = await fetch(`http://127.0.0.1:5500/${folder}/`);
   let responseText = await response.text();
 
   // Parse the HTML response into a DOM document
@@ -41,10 +41,9 @@ async function main() {
 
   // Log the song list in the console
   console.log(songs);
-
   // Assuming there's an element with class 'songList' that contains a <ul>
-  let songUl = document.querySelector(".songList ul");
-
+  let songUl = document.querySelector(".songList").getElementsByTagName("ul")[0];
+  songUl.innerHTML="";
   // Add the song list to the HTML
   for (const song of songs) {
     songUl.innerHTML += `<li><i class="ri-music-2-fill"></i>
@@ -60,6 +59,45 @@ async function main() {
   if (firstLi) {
     firstLi.remove();
   }
+
+    // Next previous song
+    document.querySelector(".previous").addEventListener("click", () => {
+      let index = songs.indexOf(currentSongName);
+      if ((index - 1) >= 0) {
+        playMusic(songs[index - 1], folder);
+      }
+    });
+  
+    document.querySelector(".next").addEventListener("click", () => {
+      let index = songs.indexOf(currentSongName);
+  
+      if ((index + 1) < songs.length) {
+        playMusic(songs[index + 1], folder);
+      }
+    });
+  
+}
+
+async function showAlbum() {
+
+    // Fetch HTML content from the server
+    let a = await fetch(`http://127.0.0.1:5500/musics/`);
+    let response = await a.text();
+    let div=document.createElement("div")
+    div.innerHTML=response;
+    console.log(div)
+    let anchors= div.getElementsByTagName("a")
+    Array.from(anchors).forEach(e=>{
+      if(e.href.includes("/musics")){
+        console.log(e.href.split("/").slice(-2)[1])
+      }
+    })
+}
+
+
+
+async function main() {
+  showAlbum()
 
   // Add event listener to play button which is available in center
   document.querySelector(".play-first-btn").addEventListener("click", () => {
@@ -77,7 +115,7 @@ async function main() {
   Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach((e) => {
     e.addEventListener("click", () => {
       let songName = e.querySelector(".songDetails > div").innerHTML.trim();
-      playMusic(songName);
+      playMusic(songName, crntFolder);
     });
   });
 
@@ -90,37 +128,55 @@ async function main() {
     start.innerHTML = `<i class="ri-pause-circle-fill"></i>`;
     isPlaying = true;
   });
-  //Song timer function
-  //function for converting sec to min
+
+  // Function for converting sec to min
   function secToMin(seconds) {
     // Calculate minutes and remaining seconds
     let minutes = Math.floor(seconds / 60);
     let remainingSeconds = Math.floor(seconds % 60);
-    
+
     // Pad single digit seconds with a leading zero
     if (remainingSeconds < 10) {
       remainingSeconds = '0' + remainingSeconds;
     }
-  
+
     // Return the formatted time string
     return `${minutes}:${remainingSeconds}`;
   }
 
-  //to update time of song
-  currentSong.addEventListener("timeupdate", ()=>{
+  // Update time of song
+  currentSong.addEventListener("timeupdate", () => {
     // console.log(currentSong.currentTime, currentSong.duration);
-    document.querySelector(".songTime").innerHTML=`${secToMin(currentSong.currentTime)}/${secToMin(currentSong.duration)}`
-    document.querySelector(".circle").style.left=(currentSong.currentTime/currentSong.duration)*98+"%"
-  })
+    document.querySelector(".songTime").innerHTML = `${secToMin(currentSong.currentTime)}/${secToMin(currentSong.duration)}`;
+    document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 98 + "%";
+  });
+
+  // Move seekbar of song as per need
+  document.querySelector(".seekbar").addEventListener("click", (e) => { // offsetX is used to get actual point where user clicked.
+    let songPercent = (e.offsetX / e.target.getBoundingClientRect().width) * 98; // getBoundingClientRect used to find where user is on page, 98% because seekbar width is 98%
+    document.querySelector(".circle").style.left = songPercent + "%";
+    currentSong.currentTime = ((currentSong.duration) * songPercent) / 100;
+  });
+
+  document.querySelector(".menuIcon").addEventListener("click", () => {
+    document.querySelector(".left").style.left = "0";
+  });
+
+  document.querySelector(".mainPage").addEventListener("click", () => {
+    document.querySelector(".left").style.left = "-100%";
+  });
 
 
-  //to move seekbar of song as per need
-  document.querySelector(".seekbar").addEventListener("click", e=> { //offsetx is used to get actual point where user clicked. 
-    let songPercent = (e.offsetX/e.target.getBoundingClientRect().width)*98; //getBoundingClientRect use to find where user is on page, 98% bcz seekbar width is 98%
-    document.querySelector(".circle").style.left=songPercent+"%";
-    currentSong.currentTime=((currentSong.duration)*songPercent)/100;
+//load songs in playlist
+Array.from(document.querySelectorAll(".card")).forEach(e=>{
+  e.addEventListener("click", async item=>{
+    await getSongs(`musics/${item.currentTarget.dataset.folder}`);
+    playMusic(songs[1],true)
+
   })
-  
+})
+
+
 }
 
 main();

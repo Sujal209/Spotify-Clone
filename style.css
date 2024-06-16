@@ -72,6 +72,10 @@ body {
   height: calc(100% - 8vw - 20px);
 }
 
+.mainPage {
+  display: none;
+}
+
 .playlist {
   font-size: 15px;
 }
@@ -107,6 +111,17 @@ body {
 
 .nav-left button {
   padding: 7px 10px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.nav-left > i {
+  display: none;
 }
 
 .nav-right button {
@@ -267,9 +282,84 @@ body {
   font-weight: 600;
 }
 
-.musicInfo{
+.musicInfo {
   top: 12px;
-  left: 30px; 
+  left: 30px;
   font-size: 15px;
   font-weight: 600;
+}
+
+/*media queries*/
+
+@media (max-width: 1300px) {
+  .nav-left > i {
+    display: block;
+  }
+
+  .mainPage{
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 85%;
+    font-weight: 900;
+    font-size: 20px;
+  }
+
+  .left {
+    position: absolute;
+    left: -100%;
+    z-index: 1;
+    width: 100%;
+    transition: all 2s;
+    height: 70vh;
+    max-width: 550px;
+    height: 90%
+  }
+  .footer {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .right {
+    width: 100vw;
+    height: 87%
+
+  }
+
+  .songList {
+    max-height: 450px;}
+
+  .playbar {
+    width: 100vw;
+    /* bottom: 30px; */
+    height: 100px;
+  }
+  .seekbar {
+    position: absolute;
+    bottom: 25px;
+  }
+
+  .circle {
+    position: absolute;
+    bottom: 21px;
+  }
+
+  .songTime {
+    position: absolute;
+    top: 35px;
+    right: 10px;
+  }
+  .musicbtn {
+    position: absolute;
+    top: 25px;
+    left: 10px;
+  }
+  .musicInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
 }
