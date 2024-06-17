@@ -23,7 +23,7 @@ let playMusic = (music, folder) => {
 async function getSongs(folder) {
   crntFolder = folder;
   // Fetch the HTML document containing the song list
-  let response = await fetch(`/${folder}/`);
+  let response = await fetch(`https://github.com/Sujal209/spotify-clone/tree/spotify/${folder}/`);
   let responseText = await response.text();
 
   // Parse the HTML response into a DOM document
@@ -87,14 +87,14 @@ async function getSongs(folder) {
 
 async function showAlbum() {
   // Fetch HTML content from the server
-  let a = await fetch(`/musics/`);
+  let a = await fetch(`https://github.com/Sujal209/spotify-clone/tree/spotify/musics/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
   let anchors = div.getElementsByTagName("a");
 
   Array.from(anchors).forEach(async e => {
-    if (e.href.includes("/musics")) {
+    if (e.href.includes("https://github.com/Sujal209/spotify-clone/tree/spotify/musics/")) {
       let folderName = (e.href.split("/").slice(-2)[1]);
       let res = await fetch(`/musics/${folderName}/info.json`);
       let info = await res.json();
